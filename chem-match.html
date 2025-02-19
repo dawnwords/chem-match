@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="UTF-8">
+	<title>化学术语中英文配对游戏</title>
+	<style>
+		/* 重置默认样式 */
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		/* 页面总体样式 */
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f4;
+			text-align: center;
+			padding: 20px;
+		}
+
+		.container {
+			max-width: 1000px;
+			margin: 0 auto;
+		}
+
+		h1 {
+			margin-bottom: 20px;
+			color: #333;
+			font-size: 2em;
+		}
+
+		.controls {
+			margin-bottom: 20px;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.controls label {
+			margin-right: 10px;
+			font-size: 1.1em;
+		}
+
+		.controls input {
+			width: 60px;
+			padding: 5px;
+			font-size: 1em;
+			margin-right: 10px;
+			text-align: center;
+		}
+
+		.controls button {
+			padding: 10px 20px;
+			font-size: 1em;
+			margin-left: 10px;
+			cursor: pointer;
+			border: none;
+			background-color: #007bff;
+			color: #fff;
+			border-radius: 5px;
+			transition: background-color 0.3s;
+		}
+
+		.controls button:hover {
+			background-color: #0056b3;
+		}
+
+		.timer {
+			margin-bottom: 20px;
+			font-size: 1.2em;
+			color: #555;
+		}
+
+		.game-area {
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			margin-bottom: 20px;
+		}
+
+		.words-container {
+			width: 45%;
+			min-width: 300px;
+			margin-bottom: 20px;
+		}
+
+		.words-container h2 {
+			margin-bottom: 10px;
+			color: #444;
+			font-size: 1.5em;
+		}
+
+		.words {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.word {
+			padding: 10px 15px;
+			margin: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+			user-select: none;
+			transition: transform 0.2s, background-color 0.3s;
+			font-size: 1em;
+			min-width: 100px;
+			text-align: center;
+		}
+
+		.word:hover {
+			transform: scale(1.05);
+		}
+
+		.chinese .word {
+			background-color: #f8d7da;
+			/* 浅红色背景 */
+			color: #721c24;
+		}
+
+		.english .word {
+			background-color: #d4edda;
+			/* 浅绿色背景 */
+			color: #155724;
+		}
+
+		.word.selected {
+			border: 2px solid #0000ff;
+		}
+
+		.result {
+			margin-top: 20px;
+			font-size: 1.2em;
+			color: #000;
+		}
+
+		.history {
+			margin-top: 30px;
+			text-align: left;
+		}
+
+		.history h2 {
+			margin-bottom: 10px;
+			color: #444;
+			font-size: 1.5em;
+		}
+
+		.history ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
+		.history li {
+			background-color: #fff;
+			padding: 10px;
+			margin-bottom: 5px;
+			border-radius: 5px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+			font-size: 1em;
+			word-break: break-word;
+		}
+
+		/* 响应式设计调整 */
+		@media (max-width: 768px) {
+			.game-area {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.words-container {
+				width: 90%;
+			}
+
+			.controls {
+				flex-direction: column;
+			}
+
+			.controls label,
+			.controls input,
+			.controls button {
+				margin: 5px 0;
+			}
+
+			.word {
+				min-width: 80px;
+				padding: 8px 12px;
+				font-size: 0.9em;
+			}
+
+			.history li {
+				font-size: 0.9em;
+			}
+		}
+
+		@media (max-width: 480px) {
+			h1 {
+				font-size: 1.5em;
+			}
+
+			.controls label {
+				font-size: 1em;
+			}
+
+			.controls input {
+				width: 50px;
+			}
+
+			.controls button {
+				padding: 8px 16px;
+				font-size: 0.9em;
+			}
+
+			.timer {
+				font-size: 1em;
+			}
+
+			.words-container h2,
+			.history h2 {
+				font-size: 1.2em;
+			}
+
+			.word {
+				min-width: 70px;
+				padding: 6px 10px;
+				font-size: 0.8em;
+			}
+
+			.history li {
+				font-size: 0.8em;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>化学术语中英文配对游戏</h1>
+
+		<!-- 控制区 -->
+		<div class="controls">
+			<label for="pairCount">请输入配对组数（1-50）:</label>
+			<input type="number" id="pairCount" min="1" max="50" value="20">
+			<button id="startButton">开始游戏</button>
+		</div>
+
+		<!-- 计时器 -->
+		<div class="timer">
+			时间: <span id="timer">0</span> 秒
+		</div>
+
+		<!-- 词汇展示区 -->
+		<div class="game-area">
+			<div id="chineseWords" class="words-container chinese">
+				<h2>中文词条</h2>
+				<div class="words"></div>
+			</div>
+			<div id="englishWords" class="words-container english">
+				<h2>English Terms</h2>
+				<div class="words"></div>
+			</div>
+		</div>
+
+		<!-- 结果显示 -->
+		<div id="result" class="result"></div>
+
+		<!-- 历史战绩 -->
+		<div id="history" class="history">
+			<h2>历史战绩</h2>
+			<ul id="historyList"></ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// 所有化学术语中英文配对
+		const termPairs = [
+			{ chinese: '原子', english: 'Atom' },
+			{ chinese: '分子', english: 'Molecule' },
+			{ chinese: '化合价', english: 'Valence' },
+			{ chinese: '化学键', english: 'Chemical Bond' },
+			{ chinese: '反应速率', english: 'Reaction Rate' },
+			{ chinese: '催化剂', english: 'Catalyst' },
+			{ chinese: '电解质', english: 'Electrolyte' },
+			{ chinese: '过氧化物', english: 'Peroxide' },
+			{ chinese: '酸', english: 'Acid' },
+			{ chinese: '碱', english: 'Base' },
+			{ chinese: '盐', english: 'Salt' },
+			{ chinese: '氧化还原', english: 'Redox' },
+			{ chinese: '等温', english: 'Isothermal' },
+			{ chinese: '浓度', english: 'Concentration' },
+			{ chinese: '溶剂', english: 'Solvent' },
+			{ chinese: '溶质', english: 'Solute' },
+			{ chinese: '蒸馏', english: 'Distillation' },
+			{ chinese: '电化学', english: 'Electrochemistry' },
+			{ chinese: '晶体', english: 'Crystal' },
+			{ chinese: '蒸发', english: 'Evaporation' },
+			{ chinese: '饱和溶液', english: 'Saturated Solution' },
+			{ chinese: '沸点', english: 'Boiling Point' },
+			{ chinese: '熔点', english: 'Melting Point' },
+			{ chinese: '摩尔', english: 'Mole' },
+			{ chinese: '理想气体', english: 'Ideal Gas' },
+			{ chinese: '配位化合物', english: 'Coordination Compound' },
+			{ chinese: '配位数', english: 'Coordination Number' },
+			{ chinese: '胺', english: 'Amine' },
+			{ chinese: '醇', english: 'Alcohol' },
+			{ chinese: '酮', english: 'Ketone' },
+			{ chinese: '醛', english: 'Aldehyde' },
+			{ chinese: '酯', english: 'Ester' },
+			{ chinese: '芳香烃', english: 'Aromatic Hydrocarbon' },
+			{ chinese: '烷烃', english: 'Alkane' },
+			{ chinese: '烯烃', english: 'Alkene' },
+			{ chinese: '炔烃', english: 'Alkyne' },
+			{ chinese: '杂环化合物', english: 'Heterocyclic Compound' },
+			{ chinese: '硫酸', english: 'Sulfuric Acid' },
+			{ chinese: '盐酸', english: 'Hydrochloric Acid' },
+			{ chinese: '硝酸', english: 'Nitric Acid' },
+			{ chinese: '氢氧化钠', english: 'Sodium Hydroxide' },
+			{ chinese: '氢氧化钾', english: 'Potassium Hydroxide' },
+			{ chinese: '氨水', english: 'Ammonia Solution' },
+		];
+
+		// 游戏状态变量
+		let selectedPairCount = 20;
+		let selectedPairs = [];
+		let selectedChinese = null;
+		let selectedEnglish = null;
+		let startTime = null;
+		let timerInterval = null;
+
+		// DOM 元素引用
+		const startButton = document.getElementById('startButton');
+		const timerDisplay = document.getElementById('timer');
+		const resultDiv = document.getElementById('result');
+		const historyList = document.getElementById('historyList');
+
+		// 添加事件监听
+		startButton.addEventListener('click', startGame);
+		window.addEventListener('load', loadHistory);
+
+		/**
+		 * 开始游戏
+		 */
+		function startGame() {
+			// 获取用户输入的配对组数
+			const pairCountInput = document.getElementById('pairCount');
+			let pairCount = parseInt(pairCountInput.value);
+			if (isNaN(pairCount) || pairCount < 1 || pairCount > 50) {
+				alert('请输入1到50之间的配对组数');
+				return;
+			}
+			selectedPairCount = Math.min(pairCount, termPairs.length);
+
+			// 重置游戏状态
+			clearInterval(timerInterval);
+			timerDisplay.textContent = '0';
+			resultDiv.textContent = '';
+			selectedPairs = [];
+			selectedChinese = null;
+			selectedEnglish = null;
+
+			// 随机选择配对组
+			selectedPairs = shuffle(termPairs).slice(0, selectedPairCount);
+
+			// 分离中文和英文词汇
+			const chineseWords = selectedPairs.map(pair => pair.chinese);
+			const englishWords = selectedPairs.map(pair => pair.english);
+
+			// 打乱词汇顺序
+			const shuffledChinese = shuffle(chineseWords);
+			const shuffledEnglish = shuffle(englishWords);
+
+			// 渲染词汇到页面
+			renderWords('chineseWords', shuffledChinese, 'chinese');
+			renderWords('englishWords', shuffledEnglish, 'english');
+
+			// 开始计时
+			startTime = Date.now();
+			timerInterval = setInterval(updateTimer, 1000);
+		}
+
+		/**
+		 * 渲染词汇到指定容器
+		 * @param {string} containerId - 容器的ID
+		 * @param {Array} words - 词汇数组
+		 * @param {string} type - 词汇类型（'chinese' 或 'english'）
+		 */
+		function renderWords(containerId, words, type) {
+			const container = document.querySelector(`#${containerId} .words`);
+			container.innerHTML = '';
+			words.forEach(word => {
+				const div = document.createElement('div');
+				div.classList.add('word');
+				div.textContent = word;
+				div.dataset.type = type;
+				div.dataset.value = word;
+				div.addEventListener('click', handleWordClick);
+				container.appendChild(div);
+			});
+		}
+
+		/**
+		 * 处理词汇点击事件
+		 * @param {Event} e - 事件对象
+		 */
+		function handleWordClick(e) {
+			const wordElement = e.currentTarget;
+
+			// 忽略已经匹配的词汇
+			if (wordElement.classList.contains('matched') || wordElement.style.display === 'none') return;
+
+			// 根据类型处理选择
+			if (wordElement.dataset.type === 'chinese') {
+				if (selectedChinese) {
+					selectedChinese.classList.remove('selected');
+				}
+				selectedChinese = wordElement;
+			} else if (wordElement.dataset.type === 'english') {
+				if (selectedEnglish) {
+					selectedEnglish.classList.remove('selected');
+				}
+				selectedEnglish = wordElement;
+			}
+
+			wordElement.classList.add('selected');
+
+			// 如果同时选择了中文和英文，检查是否匹配
+			if (selectedChinese && selectedEnglish) {
+				checkMatch();
+			}
+		}
+
+		/**
+		 * 检查选择的词汇是否匹配
+		 */
+		function checkMatch() {
+			const chineseWord = selectedChinese.dataset.value;
+			const englishWord = selectedEnglish.dataset.value;
+
+			// 检查是否为正确的配对
+			const correctPair = selectedPairs.find(pair => pair.chinese === chineseWord && pair.english === englishWord);
+
+			if (correctPair) {
+				// 移除匹配成功的词汇
+				selectedChinese.classList.add('matched');
+				selectedEnglish.classList.add('matched');
+				selectedChinese.style.display = 'none';
+				selectedEnglish.style.display = 'none';
+
+				// 检查是否全部匹配完成
+				const remainingChinese = document.querySelectorAll('#chineseWords .word:not([style*="display: none"])').length;
+				const remainingEnglish = document.querySelectorAll('#englishWords .word:not([style*="display: none"])').length;
+				if (remainingChinese === 0 && remainingEnglish === 0) {
+					endGame();
+				}
+			} else {
+				// 提示错误匹配
+				alert('不匹配，请再试一次');
+			}
+
+			// 重置选择
+			if (selectedChinese) selectedChinese.classList.remove('selected');
+			if (selectedEnglish) selectedEnglish.classList.remove('selected');
+			selectedChinese = null;
+			selectedEnglish = null;
+		}
+
+		/**
+		 * 结束游戏，计算成绩并保存
+		 */
+		function endGame() {
+			clearInterval(timerInterval);
+			const endTime = Date.now();
+			const elapsedSeconds = Math.floor((endTime - startTime) / 1000);
+			const elapsedMinutes = elapsedSeconds / 60;
+			const avgWordsPerMinute = (selectedPairCount * 2) / elapsedMinutes;
+			resultDiv.textContent = `完成！耗时: ${elapsedSeconds} 秒，平均每分钟消除词条数: ${avgWordsPerMinute.toFixed(2)} 个`;
+
+			// 保存记录到历史
+			saveHistory(elapsedSeconds, avgWordsPerMinute.toFixed(2));
+			loadHistory();
+		}
+
+		/**
+		 * 更新计时器显示
+		 */
+		function updateTimer() {
+			const now = Date.now();
+			const elapsedSeconds = Math.floor((now - startTime) / 1000);
+			timerDisplay.textContent = elapsedSeconds;
+		}
+
+		/**
+		 * Fisher-Yates 洗牌算法
+		 * @param {Array} array - 需要打乱的数组
+		 * @returns {Array} - 打乱后的新数组
+		 */
+		function shuffle(array) {
+			let arr = array.slice(); // 复制数组
+			for (let i = arr.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[arr[i], arr[j]] = [arr[j], arr[i]];
+			}
+			return arr;
+		}
+
+		/**
+		 * 保存游戏记录到 localStorage
+		 * @param {number} time - 花费的时间（秒）
+		 * @param {number} avg - 平均每分钟消除的词条数
+		 */
+		function saveHistory(time, avg) {
+			const history = JSON.parse(localStorage.getItem('chemGameHistory')) || [];
+			const newRecord = { time, avg, date: new Date().toLocaleString() };
+			history.push(newRecord);
+			localStorage.setItem('chemGameHistory', JSON.stringify(history));
+		}
+
+		/**
+		 * 加载历史战绩并显示
+		 */
+		function loadHistory() {
+			historyList.innerHTML = '';
+			const history = JSON.parse(localStorage.getItem('chemGameHistory')) || [];
+			history.forEach(record => {
+				const li = document.createElement('li');
+				li.textContent = `${record.date} - 耗时: ${record.time} 秒, 平均每分钟消除: ${record.avg} 个`;
+				historyList.appendChild(li);
+			});
+		}
+
+	</script>
+</body>
+
+</html>
