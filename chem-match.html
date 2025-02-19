@@ -14,8 +14,7 @@
 
 		/* 根字体大小 */
 		html {
-			font-size: 16px;
-			/* 基准字体大小，可以根据需要调整 */
+			font-size: 16px; /* 基准字体大小，可以根据需要调整 */
 		}
 
 		/* 页面总体样式 */
@@ -23,22 +22,19 @@
 			font-family: Arial, sans-serif;
 			background-color: #f4f4f4;
 			text-align: center;
-			padding: 1.25rem;
-			/* 20px */
+			padding: 1.25rem; /* 20px */
 		}
 
 		.container {
-			max-width: 1000px;
+			max-width: 1200px; /* 增加最大宽度限制 */
 			margin: 0 auto;
 			padding: 0 1rem;
 		}
 
 		h1 {
-			margin-bottom: 1.25rem;
-			/* 20px */
+			margin-bottom: 1.25rem; /* 20px */
 			color: #333;
-			font-size: 2rem;
-			/* 32px */
+			font-size: 2rem; /* 32px */
 		}
 
 		.controls {
@@ -47,35 +43,28 @@
 			flex-wrap: wrap;
 			justify-content: center;
 			align-items: center;
-			gap: 0.5rem;
-			/* 8px */
+			gap: 0.5rem; /* 8px */
 		}
 
 		.controls label {
-			font-size: 1.125rem;
-			/* 18px */
+			font-size: 1.125rem; /* 18px */
 		}
 
 		.controls input {
-			width: 3.75rem;
-			/* 60px */
-			padding: 0.3125rem 0.625rem;
-			/* 5px 10px */
-			font-size: 1rem;
-			/* 16px */
+			width: 3.75rem; /* 60px */
+			padding: 0.3125rem 0.625rem; /* 5px 10px */
+			font-size: 1rem; /* 16px */
 			text-align: center;
 		}
 
 		.controls button {
-			padding: 0.625rem 1.25rem;
-			/* 10px 20px */
+			padding: 0.625rem 1.25rem; /* 10px 20px */
 			font-size: 1rem;
 			cursor: pointer;
 			border: none;
 			background-color: #007bff;
 			color: #fff;
-			border-radius: 0.3125rem;
-			/* 5px */
+			border-radius: 0.3125rem; /* 5px */
 			transition: background-color 0.3s;
 		}
 
@@ -85,16 +74,14 @@
 
 		.timer {
 			margin-bottom: 1.25rem;
-			font-size: 1.25rem;
-			/* 20px */
+			font-size: 1.25rem; /* 20px */
 			color: #555;
 		}
 
 		.game-area {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-			gap: 1.25rem;
-			/* 20px */
+			gap: 1.25rem; /* 20px */
 			margin-bottom: 1.25rem;
 		}
 
@@ -102,39 +89,31 @@
 			background-color: #fff;
 			padding: 1rem;
 			border-radius: 0.5rem;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 0 10px rgba(0,0,0,0.1);
 		}
 
 		.words-container h2 {
-			margin-bottom: 0.75rem;
-			/* 12px */
+			margin-bottom: 0.75rem; /* 12px */
 			color: #444;
-			font-size: 1.5rem;
-			/* 24px */
+			font-size: 1.5rem; /* 24px */
 		}
 
 		.words {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			gap: 0.5rem;
-			/* 8px */
+			gap: 0.5rem; /* 8px */
 		}
 
 		.word {
-			padding: 0.625rem 0.9375rem;
-			/* 10px 15px */
-			margin: 0.3125rem;
-			/* 5px */
-			border-radius: 0.3125rem;
-			/* 5px */
+			padding: 0.625rem 0.9375rem; /* 10px 15px */
+			margin: 0.3125rem; /* 5px */
+			border-radius: 0.3125rem; /* 5px */
 			cursor: pointer;
 			user-select: none;
 			transition: transform 0.2s, background-color 0.3s;
-			font-size: 1rem;
-			/* 16px */
-			min-width: 6.25rem;
-			/* 100px */
+			font-size: 1rem; /* 16px */
+			min-width: 6.25rem; /* 100px */
 			text-align: center;
 			word-wrap: break-word;
 		}
@@ -144,41 +123,34 @@
 		}
 
 		.chinese .word {
-			background-color: #f8d7da;
-			/* 浅红色背景 */
+			background-color: #f8d7da; /* 浅红色背景 */
 			color: #721c24;
 		}
 
 		.english .word {
-			background-color: #d4edda;
-			/* 浅绿色背景 */
+			background-color: #d4edda; /* 浅绿色背景 */
 			color: #155724;
 		}
 
 		.word.selected {
-			border: 0.125rem solid #0000ff;
-			/* 2px */
+			border: 0.125rem solid #0000ff; /* 2px */
 		}
 
 		.result {
 			margin-top: 1.25rem;
-			font-size: 1.25rem;
-			/* 20px */
+			font-size: 1.25rem; /* 20px */
 			color: #000;
 		}
 
 		.history {
-			margin-top: 1.875rem;
-			/* 30px */
+			margin-top: 1.875rem; /* 30px */
 			text-align: left;
 		}
 
 		.history h2 {
-			margin-bottom: 0.625rem;
-			/* 10px */
+			margin-bottom: 0.625rem; /* 10px */
 			color: #444;
-			font-size: 1.5rem;
-			/* 24px */
+			font-size: 1.5rem; /* 24px */
 		}
 
 		.history ul {
@@ -188,15 +160,11 @@
 
 		.history li {
 			background-color: #fff;
-			padding: 0.625rem;
-			/* 10px */
-			margin-bottom: 0.3125rem;
-			/* 5px */
-			border-radius: 0.3125rem;
-			/* 5px */
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-			font-size: 1rem;
-			/* 16px */
+			padding: 0.625rem; /* 10px */
+			margin-bottom: 0.3125rem; /* 5px */
+			border-radius: 0.3125rem; /* 5px */
+			box-shadow: 0 0 5px rgba(0,0,0,0.1);
+			font-size: 1rem; /* 16px */
 			word-break: break-word;
 		}
 
@@ -205,25 +173,20 @@
 		/* 针对视口宽度大于等于 600px 的设备 */
 		@media (min-width: 600px) {
 			.controls {
-				gap: 1rem;
-				/* 16px */
+				gap: 1rem; /* 16px */
 			}
 
 			.word {
-				min-width: 7.5rem;
-				/* 120px */
-				font-size: 1.125rem;
-				/* 18px */
+				min-width: 7.5rem; /* 120px */
+				font-size: 1.125rem; /* 18px */
 			}
 
 			.timer {
-				font-size: 1.5rem;
-				/* 24px */
+				font-size: 1.5rem; /* 24px */
 			}
 
 			.history li {
-				font-size: 1.125rem;
-				/* 18px */
+				font-size: 1.125rem; /* 18px */
 			}
 		}
 
@@ -238,49 +201,137 @@
 			}
 
 			h1 {
-				font-size: 2.5rem;
-				/* 40px */
+				font-size: 2.5rem; /* 40px */
 			}
 
 			.controls label {
-				font-size: 1.25rem;
-				/* 20px */
+				font-size: 1.25rem; /* 20px */
 			}
 
 			.controls input {
-				width: 4rem;
-				/* 64px */
-				padding: 0.375rem 0.75rem;
-				/* 6px 12px */
-				font-size: 1.125rem;
-				/* 18px */
+				width: 4rem; /* 64px */
+				padding: 0.375rem 0.75rem; /* 6px 12px */
+				font-size: 1.125rem; /* 18px */
 			}
 
 			.controls button {
-				padding: 0.75rem 1.5rem;
-				/* 12px 24px */
-				font-size: 1.125rem;
-				/* 18px */
+				padding: 0.75rem 1.5rem; /* 12px 24px */
+				font-size: 1.125rem; /* 18px */
 			}
 
 			.word {
-				min-width: 8.75rem;
-				/* 140px */
-				padding: 0.75rem 1.25rem;
-				/* 12px 20px */
-				font-size: 1.125rem;
-				/* 18px */
+				min-width: 8.75rem; /* 140px */
+				padding: 0.75rem 1.25rem; /* 12px 20px */
+				font-size: 1.125rem; /* 18px */
 			}
 
 			.history li {
-				font-size: 1.25rem;
-				/* 20px */
+				font-size: 1.25rem; /* 20px */
+			}
+		}
+
+		/* 针对视口宽度大于等于 1200px 的设备（大屏幕笔记本和桌面显示器） */
+		@media (min-width: 1200px) {
+			.container {
+				max-width: 1400px;
+			}
+
+			h1 {
+				font-size: 3rem; /* 48px */
+			}
+
+			.controls {
+				gap: 1.5rem; /* 24px */
+			}
+
+			.controls label {
+				font-size: 1.5rem; /* 24px */
+			}
+
+			.controls input {
+				width: 5rem; /* 80px */
+				padding: 0.5rem 1rem; /* 8px 16px */
+				font-size: 1.25rem; /* 20px */
+			}
+
+			.controls button {
+				padding: 1rem 2rem; /* 16px 32px */
+				font-size: 1.25rem; /* 20px */
+			}
+
+			.word {
+				min-width: 10rem; /* 160px */
+				padding: 1rem 1.5rem; /* 16px 24px */
+				font-size: 1.25rem; /* 20px */
+			}
+
+			.timer {
+				font-size: 2rem; /* 32px */
+			}
+
+			.result {
+				font-size: 1.5rem; /* 24px */
+			}
+
+			.history h2 {
+				font-size: 1.75rem; /* 28px */
+			}
+
+			.history li {
+				font-size: 1.25rem; /* 20px */
+			}
+		}
+
+		/* 针对视口宽度大于等于 1600px 的设备（超大屏幕设备） */
+		@media (min-width: 1600px) {
+			.container {
+				max-width: 1600px;
+			}
+
+			h1 {
+				font-size: 3.5rem; /* 56px */
+			}
+
+			.controls label {
+				font-size: 1.75rem; /* 28px */
+			}
+
+			.controls input {
+				width: 6rem; /* 96px */
+				padding: 0.625rem 1.25rem; /* 10px 20px */
+				font-size: 1.5rem; /* 24px */
+			}
+
+			.controls button {
+				padding: 1.25rem 2.5rem; /* 20px 40px */
+				font-size: 1.5rem; /* 24px */
+			}
+
+			.word {
+				min-width: 11.25rem; /* 180px */
+				padding: 1.25rem 1.75rem; /* 20px 28px */
+				font-size: 1.5rem; /* 24px */
+			}
+
+			.timer {
+				font-size: 2.5rem; /* 40px */
+			}
+
+			.result {
+				font-size: 1.75rem; /* 28px */
+			}
+
+			.history h2 {
+				font-size: 2rem; /* 32px */
+			}
+
+			.history li {
+				font-size: 1.5rem; /* 24px */
 			}
 		}
 
 		/* 针对高DPI设备（如视网膜屏幕）优化 */
-		@media (-webkit-min-device-pixel-ratio: 2),
-		(min-resolution: 192dpi) {
+		@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
 			/* 可以在这里添加针对高DPI设备的优化，如更高清的图像 */
 			/* 目前本项目主要为文本和颜色，无需特别优化 */
 		}
