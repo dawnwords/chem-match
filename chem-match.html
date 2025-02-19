@@ -111,7 +111,7 @@
 			border-radius: 0.3125rem; /* 5px */
 			cursor: pointer;
 			user-select: none;
-			transition: transform 0.2s, background-color 0.3s;
+			transition: transform 0.2s, background-color 0.3s, opacity 0.3s;
 			font-size: 1rem; /* 16px */
 			min-width: 6.25rem; /* 100px */
 			text-align: center;
@@ -134,6 +134,12 @@
 
 		.word.selected {
 			border: 0.125rem solid #0000ff; /* 2px */
+		}
+
+		/* 新增: 已匹配单词的淡化样式 */
+		.word.matched {
+			opacity: 0.5;
+			pointer-events: none;
 		}
 
 		.result {
@@ -511,7 +517,7 @@
 			const wordElement = e.currentTarget;
 
 			// 忽略已经匹配的词汇
-			if (wordElement.classList.contains('matched') || wordElement.style.display === 'none') return;
+			if (wordElement.classList.contains('matched')) return;
 
 			// 根据类型处理选择
 			if (wordElement.dataset.type === 'chinese') {
@@ -545,15 +551,13 @@
 			const correctPair = selectedPairs.find(pair => pair.chinese === chineseWord && pair.english === englishWord);
 
 			if (correctPair) {
-				// 移除匹配成功的词汇
+				// 添加匹配成功的样式
 				selectedChinese.classList.add('matched');
 				selectedEnglish.classList.add('matched');
-				selectedChinese.style.display = 'none';
-				selectedEnglish.style.display = 'none';
 
 				// 检查是否全部匹配完成
-				const remainingChinese = document.querySelectorAll('#chineseWords .word:not([style*="display: none"])').length;
-				const remainingEnglish = document.querySelectorAll('#englishWords .word:not([style*="display: none"])').length;
+				const remainingChinese = document.querySelectorAll('#chineseWords .word:not(.matched)').length;
+				const remainingEnglish = document.querySelectorAll('#englishWords .word:not(.matched)').length;
 				if (remainingChinese === 0 && remainingEnglish === 0) {
 					endGame();
 				}
